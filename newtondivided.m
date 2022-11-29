@@ -1,23 +1,24 @@
 clc
 clear all
-n=input("Enter the total number of points");
-b=input("Enter the point of interpolation");
-for i=1:n
-    x(i)=input("Enter the value of x");
-    f(i)=input("Enter the value of f(x)");
-end
-for j=1:n
-    d(1,j)=f(j); 
-end
-for i=2:n
-    for j=1:n-i+1
-        d(i,j)=(d(i-1,j+1)-d(i-1,j))/(x(i-1+j)-x(j));
+x = [1;1.5;2;2.5];
+f = [2.7183;4.4817;7.3891;12.1825];
+p = 2.25;
+n = length(x);
+m = zeros(n,n);
+m(:,1) = f(:);
+for j = 2:n
+    for i = j:n
+        m(i,j) = (m(i,j-1)-m(i-1,j-1))/(x(i)-x(i-j+1));
     end
 end
-sum=d(1,1);
-product=1;
-for i=2:n
-    product=product*(b-x(i-1));
-    sum=sum+(product)*d(i,1);
+for i= 1:n
+    prod(i) = 1;
+    for j=1:i-1
+        prod(i) = prod(i)*(p-x(j));
+    end
 end
-fprintf("The value of f(%f) is = %f",b,sum);
+sum = 0;
+for i=1:n
+    sum = sum+prod(i)*m(i,i);
+end
+display(sum)
