@@ -1,32 +1,14 @@
-clc
-clear all
-a=[10 8 -3 1;2 10 1 -4;3 -4 10 1;2 2 -3 10]
-b=[16;9;10;11]
-n=length(b);
-l=eye(n); %consider it whole an identity matrix
-for j=1:n-1
-    for i=j+1:n
-        m=a(i,j)/a(j,j);
-        l(i,j)=m;
-        a(i,:)=a(i,:)-m*a(j,:);
+A=[1/3 1/2 -1/4 ;1/5 2/3 3/8;2/3 -2/3 5/8]
+% l=[1 0 0;0 1 0;0 0 1]
+
+n=size(A,1)%no of rows
+m=size(A,2) %no of columns
+l=eye(m)
+for j=1:m-1%for rows
+    for i=j+1:n       %for columns
+        l(i,j)=A(i,j)/A(j,j);
+        A(i,:)=A(i,:)-(l(i,j)*A(j,:));
     end
 end
+A
 l
-a
-y(1)=b(1);
-for i=2:n
-    sum=0;
-    for j=1:i-1
-        sum=sum+l(i,j)*y(j);
-    end
-    y(i)=(b(i)-sum);
-end
-x(n)=y(n)/a(n,n);
-for i=n-1:-1:1
-    sum=0;
-    for j=i+1:n
-        sum=sum+a(i,j)*x(j);
-    end
-    x(i)=(y(i)-sum)/a(i,i);
-end
-x
