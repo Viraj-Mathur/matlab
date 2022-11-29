@@ -1,21 +1,20 @@
 clc
 clear all
-n=input("Enter total number of points");
-p=input("Enter point of interpolation");
-for i=1:n
-    x(i)=input("Enter value of x(i)");
-    f(i)=input("Enter value of f(i)");
-end
-for i=1:n
+f=[151326;179323;203302;226542;249633;281422];
+x=[1950;1960;1970;1980;1990;2000]
+
+sum=0
+
+for i=1:6
     l(i)=1;
-    for j=1:n
-        if(i~=j)
-            l(i)=l(i)*(p-x(j))/(x(i)-x(j));
+    for j=1:6
+        if j~=i
+            l(i)= (1995-x(j))/(x(i)-x(j))*l(i);
         end
     end
 end
-sum=0;
-for i=1:n
-    sum=sum+f(i)*l(i);
+
+for i=1:6
+    sum=sum+l(i)*f(i);
 end
-fprintf("Value of f(%f) is = %f",p,sum);
+sum
